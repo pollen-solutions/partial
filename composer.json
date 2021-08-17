@@ -1,0 +1,45 @@
+{
+  "name": "pollen-solutions/partial",
+  "description": "Pollen Solutions - Partial Component - Layer and tools for creating reusable web user interfaces.",
+  "homepage": "https://www.presstify.com/pollen-solutions/partial/",
+  "keywords": [
+    "pollen-solutions",
+    "component",
+    "partial",
+    "user interfaces",
+    "ui/uix"
+  ],
+  "time": "2021-08-16",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jordy Manner",
+      "email": "jordy@presstify.com"
+    }
+  ],
+  "require": {
+    "php": "^7.4 || ^8.0",
+    "pollen-solutions/routing": "^1.0",
+    "pollen-solutions/support": "^1.0",
+    "pollen-solutions/view": "^1.0",
+    "pollen-solutions/view-extends": "^1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^9.0",
+    "roave/security-advisories": "dev-latest"
+  },
+  "autoload": {
+    "psr-4": {
+      "Pollen\\Partial\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Pollen\\Partial\\Test\\": "tests"
+    }
+  },
+  "suggest": {
+    "pollen-solutions/container" : "Pollen Solutions - Container Component - PSR-11 ready Dependencies Injection Container."
+  },
+  "minimum-stability": "dev"
+}
