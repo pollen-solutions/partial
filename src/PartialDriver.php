@@ -37,14 +37,14 @@ abstract class PartialDriver implements PartialDriverInterface
     protected string $alias = '';
 
     /**
-     * List of default HTML tag attributes of main container.
-     * @var array
+     * List of default parameters by partial driver alias.
+     * @var array<string, array>
      */
     protected static array $defaults = [];
 
     /**
-     * Identifier Id.
-     * {@internal {{ alias }}-{{ index }} by default.}
+     * Unique identifier.
+     * {@internal {{ alias }}{{ index }} by default.}
      */
     protected string $id = '';
 

@@ -42,19 +42,19 @@ class PartialManager implements PartialManagerInterface
     ];
 
     /**
-     * List of registered driver instances.
+     * List of registered driver instances by alias and index.
      * @var array<string, array<string, PartialDriverInterface>>|array
      */
     private array $drivers = [];
 
     /**
-     * List of registered driver definitions.
+     * List of registered driver definitions by alias.
      * @var array<string, PartialDriverInterface|callable|string>|array
      */
     protected array $driverDefinitions = [];
 
     /**
-     * List of routes instance by method.
+     * List of routes instance by HTTP method.
      * @var array<string, RouteInterface>|array
      */
     protected array $routes = [];
