@@ -4,7 +4,7 @@
  */
 ?>
 <?php $this->before(); ?>
-<<?php echo $this->get('tag'); ?> <?php $this->htmlAttrs(); ?>
+<<?php echo $this->get('tag'); ?> <?php echo $this->htmlAttrs(); ?>
 <?php if ($this->get('singleton')) : ?>
 />
 <?php else : ?>

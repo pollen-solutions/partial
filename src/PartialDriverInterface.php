@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Pollen\Partial;
 
 use Pollen\Http\ResponseInterface;
+use Pollen\Support\Concerns\BootableTraitInterface;
 use Pollen\Support\Concerns\ParamsBagDelegateTraitInterface;
 use Pollen\Support\Proxy\HttpRequestProxyInterface;
 use Pollen\Support\Proxy\PartialProxyInterface;
@@ -12,6 +13,7 @@ use Pollen\Support\Proxy\ViewProxyInterface;
 use Pollen\View\ViewInterface;
 
 interface PartialDriverInterface extends
+    BootableTraitInterface,
     HttpRequestProxyInterface,
     ParamsBagDelegateTraitInterface,
     PartialProxyInterface,
@@ -25,14 +27,14 @@ interface PartialDriverInterface extends
     public function __toString(): string;
 
     /**
-     * Content render displayed after the main container.
+     * Echoes content render displayed after the main container.
      *
      * @return void
      */
     public function after(): void;
 
     /**
-     * Content render displayed before the main container.
+     * Echoes content render displayed before the main container.
      *
      * @return void
      */
@@ -89,14 +91,14 @@ interface PartialDriverInterface extends
     ): string;
 
     /**
-     * Parse the HTML class attribute of main container.
+     * Parse the HTML tag class attribute of main container.
      *
      * @return static
      */
     public function parseAttrClass(): PartialDriverInterface;
 
     /**
-     * Parse the HTML tag attribute of main container.
+     * Parse the HTML tag id attribute of main container.
      *
      * @return static
      */
@@ -128,7 +130,7 @@ interface PartialDriverInterface extends
     public static function setDefaults(array $defaults = []): void;
 
     /**
-     * Sets the identifier.
+     * Sets the unique identifier.
      *
      * @param string $id
      *
@@ -163,7 +165,7 @@ interface PartialDriverInterface extends
     public function viewDirectory(): ?string;
 
     /**
-     * Route controller method.
+     * Controller method of the route stack.
      *
      * @param array ...$args
      *

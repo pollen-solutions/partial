@@ -20,8 +20,10 @@
   ],
   "require": {
     "php": "^7.4 || ^8.0",
+    "pollen-solutions/http": "^1.0",
     "pollen-solutions/routing": "^1.0",
     "pollen-solutions/support": "^1.0",
+    "pollen-solutions/validation": "^1.0",
     "pollen-solutions/view": "^1.0",
     "pollen-solutions/view-extends": "^1.0"
   },
