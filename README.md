@@ -21,11 +21,11 @@ use Pollen\Partial\PartialManager;
 
 $partial = new PartialManager();
 
-$partial->register('hello-partial', function () {
+$partial->register('hello', function () {
     return 'Hello World !';
 });
 
-echo $partial->get('hello-partial');
+echo $partial->get('hello');
 ```
 
 ### From the default partial tag driver
@@ -35,9 +35,9 @@ use Pollen\Partial\PartialManager;
 
 $partial = new PartialManager();
 
-$partial->register('hello-partial');
+$partial->register('hello');
 
-echo $partial->get('hello-partial', ['content' => 'Hello World !']);
+echo $partial->get('hello', ['content' => 'Hello World !']);
 ```
 
 ### From a custom driver
@@ -55,9 +55,9 @@ class HelloPartial extends PartialDriver
 
 $partial = new PartialManager();
 
-$partial->register('hello-partial', HelloPartial::class);
+$partial->register('hello', HelloPartial::class);
 
-echo $partial->get('hello-partial');
+echo $partial->get('hello');
 ```
 
 ### Through a PSR-11 depency injection container
@@ -81,9 +81,9 @@ class HelloPartial extends PartialDriver
 
 $container->add('helloPartialService', HelloPartial::class);
 
-$partial->register('hello-partial', 'helloPartialService');
+$partial->register('hello', 'helloPartialService');
 
-echo $partial->get('hello-partial');
+echo $partial->get('hello');
 ```
 
 ### Shows a partial driver instance with custom parameters
@@ -94,11 +94,11 @@ use Pollen\Partial\PartialManager;
 
 $partial = new PartialManager();
 
-$partial->register('hello-partial', function (PartialDriverInterface $driver) {
+$partial->register('hello', function (PartialDriverInterface $driver) {
     return 'Hello '. $driver->get('name') .' !';
 });
 
-echo $partial->get('hello-partial', ['name' => 'John Doe']);
+echo $partial->get('hello', ['name' => 'John Doe']);
 ```
 
 ### Recalls the same partial driver instance with keeped custom parameters
@@ -109,18 +109,18 @@ use Pollen\Partial\PartialManager;
 
 $partial = new PartialManager();
 
-$partial->register('hello-partial', function (PartialDriverInterface $driver) {
+$partial->register('hello', function (PartialDriverInterface $driver) {
     return 'Hello '. $driver->get('name') .' !<br>';
 });
 
-echo $partial->get('hello-partial', 'HelloJohn', ['name' => 'John Doe']);
-echo $partial->get('hello-partial', 'HelloJane', ['name' => 'Jane Doe']);
-echo $partial->get('hello-partial', 'HelloJohn');
+echo $partial->get('hello', 'HelloJohn', ['name' => 'John Doe']);
+echo $partial->get('hello', 'HelloJane', ['name' => 'Jane Doe']);
+echo $partial->get('hello', 'HelloJohn');
 ```
 
 ## Partial driver API
 
-### Partial driver call parameters
+### Partial driver parameters of call
 
 ```php
 use Pollen\Partial\PartialDriverInterface;
@@ -134,11 +134,11 @@ $tag = $partial->get('tag', [
      * -------------------------------------------------------------------------- 
      */
     /**
-     * Main container HTML tag attributes (Common parameters).
+     * Main container HTML tag attributes.
      * @var array $attrs
      */
     'attrs'   => [
-        'class' => '%s MyAppendedClass '
+        'class' => '%s MyAppendedClass'
     ],
     /**
      * Content displayed after the main container.
@@ -187,15 +187,15 @@ echo $tag;
 ### Partial driver instance methods
 
 ```php
-use Pollen\Partial\PartialManager;
+use Pollen\Field\FieldManager;
 
-$partial = new PartialManager();
+$field = new FieldManager();
 
-$partial->register('hello-partial', function () {
+$field->register('hello', function () {
     return 'Hello World';
 });
 
-if ($hello = $partial->get('hello-partial')) {
+if ($hello = $partial->get('hello')) {
     // Gets alias identifier.
     printf('alias: %s <br/>', $hello->getAlias());
 
@@ -219,11 +219,11 @@ Partial driver used Plates as default template engine.
 1. Creates a view file for the partial driver.
 
 ```php
-// /var/www/html/views/hello-partial/hello.plates.php file
+// /var/www/html/views/partial/hello.plates.php file
 /**
  * \Pollen\Partial\PartialTemplateInterface $this
  */
-echo 'Hello World !'
+echo 'Hello World !';
 ```
 
 2. Creates and call a partial driver with this above file directory as view directory.
@@ -234,14 +234,14 @@ use Pollen\Partial\PartialManager;
 
 $partial = new PartialManager();
 
-$partial->register('hello-partial', new class extends PartialDriver{});
+$partial->register('hello', new class extends PartialDriver{});
 
-echo $partial->get('hello-partial', ['view' => [
+echo $partial->get('hello', ['view' => [
     /**
      * View directory absolute path (required).
      * @var string
      */
-    'directory' => '/var/www/html/views/hello-partial/',
+    'directory' => '/var/www/html/views/partial/',
     /**
      * View override directory absolute path.
      * @var string|null
@@ -262,12 +262,9 @@ this example Twig engine is used instead Plates.
 
 1. Creates a view file for the partial driver.
 
-```php
-// /var/www/html/views/hello-partial/index.html.twig file
-/**
- * \Pollen\Partial\PartialTemplateInterface $this
- */
-echo 'Hello World !'
+```html
+<!-- /var/www/html/views/partial/hello/index.html.twig file -->
+Hello World !
 ```
 
 2. Creates and call a partial driver with this above file directory as view directory.
@@ -279,23 +276,23 @@ use Pollen\Partial\PartialManager;
 
 $partial = new PartialManager();
 
-$partial->register('hello-partial', new class extends PartialDriver{});
+$partial->register('hello', new class extends PartialDriver{});
 
-$viewEngine = (new ViewManager())->createView('twig')->setDirectory('/var/www/html/views/hello-partial/');
+$viewEngine = (new ViewManager())->createView('twig')->setDirectory('/var/www/html/views/partial/hello/');
 
-echo $partial->get('hello-partial', ['view' => $viewEngine]);
+echo $partial->get('hello', ['view' => $viewEngine]);
 ```
 
 ### Routing API usage
 
-In some cases, partial driver could do should be able to send a response through a controller, for example to respond
-form a rest api call.
+In some cases, partial driver should be able to send a response through a controller, for example to respond from a rest
+api call.
 
 Fortunately, all partial driver instance are related to a route stack and have a reponseController method to do that.
 The partial driver route stack is created for all known HTTP methods (GET, POST, PATH, OPTIONS, DELETE) and for a
 particular api method that works with XHR HTTP request.
 
-1. Creates a partial and gets its route url for the get http method.
+1. Creates a partial driver and gets its route url for the get http method.
 
 ```php
 use Pollen\Http\Response;
@@ -305,20 +302,19 @@ use Pollen\Partial\PartialManager;
 
 $partial = new PartialManager();
 
-$partial->register('hello-partial', new class extends PartialDriver {
-    public function responseController(...$args) : ResponseInterface{
-        return new Response('Hello World');
+$partial->register('hello', new class extends PartialDriver {
+    public function responseController(...$args) : ResponseInterface {
+        return new Response('Hello World !');
     }
 });
 
-$hello = $partial->get('hello-partial');
-
-// Gets the route url for get HTTP method
-echo $partial->getRouteUrl('hello-partial', null, [], 'get');
+// Gets the route url for the get HTTP method
+echo $partial->getRouteUrl('hello', null, [], 'get');
 
 ```
 
 2. Now you can call the route url in your browser.
-[Get the partial response](/_partial/hello-partial/responseController)
+
+[Get the partial response](/_partial/hello/responseController)
 
 Obviously, you are free to use your own routing stack and them controller methods instead.
