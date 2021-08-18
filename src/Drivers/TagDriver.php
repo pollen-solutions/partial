@@ -7,7 +7,7 @@ namespace Pollen\Partial\Drivers;
 use Closure;
 use Pollen\Partial\PartialDriver;
 
-class TagDriver extends PartialDriver implements TagDriverInterface
+class TagDriver extends PartialDriver
 {
     /**
      * List of known singleton tags.
